@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * 1.双指针
+     *    1.right指针向右移动
+     *    2.没有则放进set
+     *    3.重复则暂停right指针
+     *    5.maxLength赋值
+     *    6.left指针向有移动，删除left下标
+     *    7.直到set不含该元素，再继移动right指针
+     *    8.直到字符串被右指针遍历完
+     *    
+     * 2.滑动窗口
+    */
+    let str = 'abcagdsaa1'
+    function get(str) {
+      let length = maxLength = left = right = 0
+      let set = new Set()
+      while (right < str.length) {
+        // set里没有包含元素时，把该元素放进set，并且长度加1，如果长度大于最大长度，最大长度赋值长度
+        if (!set.has(str[right])) {
+          set.add(str[right])
+          length++
+          if (length > maxLength) {
+            maxLength = length
+          }
+          right++
+        } else {
+          // set里有包含元素时，移动左指针，删除元素，直到set里面不再有该元素时
+          while (set.has(str[right])) {
+            set.delete(str[left])
+            length--
+            left++
+          }
+          // set不含元素时，继续移动右指针放入元素
+          set.add(str[right])
+          length++
+          if (length > maxLength) {
+            maxLength = length
+          }
+          right++
+
+        }
+      }
+      return maxLength
+    }
+    console.log(get(str))
+  </script>
+</body>
+
+</html>
